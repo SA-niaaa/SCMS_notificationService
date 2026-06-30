@@ -1,3 +1,577 @@
+// // // import SockJS from "sockjs-client";
+// // // import { Client } from "@stomp/stompjs";
+
+// // // let stompClient: Client | null = null;
+
+// // // const SOCKET_URL = "http://localhost:8081/ws";
+
+// // // export interface OnlineUser {
+
+// // //     id: number;
+
+// // //     name: string;
+
+// // // }
+
+// // // export function connectOnlineUsers(
+
+// // //     userId: number,
+
+// // //     userName: string,
+
+// // //     onUsersChanged: (users: OnlineUser[]) => void
+
+// // // ) {
+
+// // //     if (stompClient?.connected) {
+
+// // //         console.log("Already Connected");
+
+// // //         return;
+
+// // //     }
+
+// // //     const socket = new SockJS(SOCKET_URL);
+
+// // //     stompClient = new Client({
+
+// // //         webSocketFactory: () => socket,
+
+// // //         reconnectDelay: 5000,
+
+// // //         debug: (msg) => console.log(msg),
+
+// // //     });
+
+// // //     stompClient.onConnect = () => {
+
+// // //         console.log("Connected For Online Users");
+
+// // //         stompClient?.publish({
+
+// // //             destination: "/app/user/connect",
+
+// // //             body: JSON.stringify({
+
+// // //                 id: userId,
+
+// // //                 name: userName
+
+// // //             })
+
+// // //         });
+
+// // //         stompClient?.subscribe(
+
+// // //             "/topic/online-users",
+
+// // //             (message) => {
+
+// // //                 const users = JSON.parse(message.body);
+
+// // //                 onUsersChanged(users);
+
+// // //             }
+
+// // //         );
+
+// // //     };
+
+// // //     stompClient.activate();
+
+// // // }
+
+// // // export function disconnectOnlineUsers() {
+
+// // //     stompClient?.deactivate();
+
+// // // }
+// // // import SockJS from "sockjs-client";
+// // // import { Client } from "@stomp/stompjs";
+
+// // // let stompClient: Client | null = null;
+
+// // // const SOCKET_URL = "http://localhost:8081/ws";
+
+// // // export interface OnlineUser {
+
+// // //     id: number;
+
+// // //     name: string;
+
+// // // }
+
+// // // export function connectOnlineUsers(
+
+// // //     userId: number,
+
+// // //     userName: string,
+
+// // //     onUsersChanged: (users: OnlineUser[]) => void
+
+// // // ) {
+
+// // //     if (stompClient?.connected) {
+
+// // //         return;
+
+// // //     }
+
+// // //     const socket = new SockJS(SOCKET_URL);
+
+// // //     stompClient = new Client({
+
+// // //         webSocketFactory: () => socket,
+
+// // //         reconnectDelay: 5000,
+
+// // //         debug: (msg) => console.log(msg)
+
+// // //     });
+
+// // //     stompClient.onConnect = () => {
+
+// // //         console.log("Online User Connected");
+
+// // //         stompClient?.subscribe(
+
+// // //             "/topic/online-users",
+
+// // //             (message) => {
+
+// // //                 const users = JSON.parse(message.body);
+
+// // //                 onUsersChanged(users);
+
+// // //             }
+
+// // //         );
+
+// // //         stompClient?.publish({
+
+// // //             destination: "/app/user/connect",
+
+// // //             body: JSON.stringify({
+
+// // //                 id: userId,
+
+// // //                 name: userName
+
+// // //             })
+
+// // //         });
+
+// // //     };
+
+// // //     stompClient.onStompError = (frame) => {
+
+// // //         console.error(frame);
+
+// // //     };
+
+// // //     stompClient.activate();
+
+// // // }
+
+// // // export function disconnectOnlineUsers() {
+
+// // //     stompClient?.deactivate();
+
+// // // }
+// // // import SockJS from "sockjs-client";
+// // // import { Client } from "@stomp/stompjs";
+
+// // // let stompClient: Client | null = null;
+
+// // // const SOCKET_URL = "http://localhost:8081/ws";
+
+// // // export interface OnlineUser {
+// // //   id: number;
+// // //   name: string;
+// // // }
+
+// // // export function connectOnlineUsers(
+// // //   userId: number,
+// // //   userName: string,
+// // //   onUsersChanged: (users: OnlineUser[]) => void
+// // // ) {
+
+// // //   if (stompClient?.connected) {
+// // //     return;
+// // //   }
+
+// // //   const socket = new SockJS(SOCKET_URL);
+
+// // //   stompClient = new Client({
+
+// // //     webSocketFactory: () => socket,
+
+// // //     reconnectDelay: 5000,
+
+// // //     debug: (msg) => console.log(msg),
+
+// // //   });
+
+// // //   stompClient.onConnect = () => {
+
+// // //     stompClient?.publish({
+
+// // //       destination: "/app/user/connect",
+
+// // //       body: JSON.stringify({
+
+// // //         id: userId,
+
+// // //         name: userName,
+
+// // //       }),
+
+// // //     });
+
+// // //     stompClient?.subscribe(
+
+// // //       "/topic/online-users",
+
+// // //       (message) => {
+
+// // //         const users = JSON.parse(
+// // //           message.body
+// // //         );
+
+// // //         onUsersChanged(users);
+
+// // //       }
+
+// // //     );
+
+// // //   };
+
+// // //   stompClient.activate();
+
+// // // }
+
+// // // export function notifyUserDisconnect(
+// // //   userId: number
+// // // ) {
+
+// // //   if (!stompClient?.connected) {
+// // //     return;
+// // //   }
+
+// // //   stompClient.publish({
+
+// // //     destination:
+// // //       "/app/user/disconnect",
+
+// // //     body: JSON.stringify(
+// // //       userId
+// // //     ),
+
+// // //   });
+
+// // // }
+
+// // // export function disconnectOnlineUsers() {
+
+// // //   stompClient?.deactivate();
+
+// // // }
+// // // import SockJS from "sockjs-client";
+// // // import { Client } from "@stomp/stompjs";
+
+// // // let stompClient: Client | null = null;
+
+// // // const SOCKET_URL =
+// // //   "http://localhost:8081/ws";
+
+// // // export interface OnlineUser {
+// // //   id: number;
+// // //   name: string;
+// // // }
+
+// // // export function connectOnlineUsers(
+// // //   userId: number,
+// // //   userName: string,
+// // //   onUsersChanged: (users: OnlineUser[]) => void
+// // // ) {
+
+// // //   if (stompClient?.connected) {
+// // //     return;
+// // //   }
+
+// // //   const socket =
+// // //     new SockJS(SOCKET_URL);
+
+// // //   stompClient =
+// // //     new Client({
+
+// // //       webSocketFactory:
+// // //         () => socket,
+
+// // //       reconnectDelay: 5000,
+
+// // //       debug: (msg) =>
+// // //         console.log(msg),
+
+// // //     });
+
+// // //     stompClient.onStompError = (frame) => {
+
+// // //   console.error(
+// // //     "ONLINE USER STOMP ERROR",
+// // //     frame
+// // //   );
+
+// // // };
+
+
+// // // stompClient.onWebSocketError = (event) => {
+
+// // //   console.error(
+// // //     "ONLINE USER WS ERROR",
+// // //     event
+// // //   );
+
+// // // };
+
+// // //   stompClient.onConnect = () => {
+
+// // //   console.log(
+// // //     "WEBSOCKET CONNECTED",
+// // //     userName
+// // //   );
+
+// // //   stompClient?.publish({
+
+// // //     destination:
+// // //       "/app/user/connect",
+
+// // //     body: JSON.stringify({
+
+// // //       id: userId,
+
+// // //       name: userName,
+
+// // //     }),
+
+// // //   });
+
+// // //   console.log(
+// // //     "USER CONNECT SENT",
+// // //     userName
+// // //   );
+
+// // //   stompClient?.subscribe(
+
+// // //     "/topic/online-users",
+
+// // //     (message) => {
+
+// // //       console.log(
+// // //         "ONLINE USERS RECEIVED",
+// // //         message.body
+// // //       );
+
+// // //       const users =
+// // //         JSON.parse(
+// // //           message.body
+// // //         );
+
+// // //       onUsersChanged(users);
+
+// // //     }
+
+// // //   );
+
+// // // };
+
+// // //   stompClient.activate();
+
+// // // }
+
+// // // export function notifyUserDisconnect(
+// // //   userId: number
+// // // ) {
+
+// // //   if (
+// // //     !stompClient?.connected
+// // //   ) {
+// // //     return;
+// // //   }
+
+// // //   stompClient.publish({
+
+// // //     destination:
+// // //       "/app/user/disconnect",
+
+// // //     body: JSON.stringify(
+// // //       userId
+// // //     ),
+
+// // //   });
+
+// // // }
+
+// // // export function disconnectOnlineUsers() {
+
+// // //   stompClient?.deactivate();
+
+// // // }
+// // import SockJS from "sockjs-client";
+// // import { Client } from "@stomp/stompjs";
+
+// // let stompClient: Client | null = null;
+
+// // const SOCKET_URL =
+// //   "http://localhost:8081/ws";
+
+// // export interface OnlineUser {
+// //   id: number;
+// //   name: string;
+// // }
+
+// // export function connectOnlineUsers(
+// //   userId: number,
+// //   userName: string,
+// //   onUsersChanged: (users: any) => void
+// // ) {
+
+// //   if (stompClient?.connected) {
+// //     console.log(
+// //       "ONLINE WS ALREADY CONNECTED"
+// //     );
+// //     return;
+// //   }
+
+// //   const socket =
+// //     new SockJS(SOCKET_URL);
+
+// //   stompClient =
+// //     new Client({
+
+// //       webSocketFactory:
+// //         () => socket,
+
+// //       reconnectDelay: 5000,
+
+// //       debug: (msg) =>
+// //         console.log(msg),
+
+// //     });
+
+// //   stompClient.onStompError =
+// //     (frame) => {
+
+// //       console.error(
+// //         "ONLINE USER STOMP ERROR",
+// //         frame
+// //       );
+
+// //     };
+
+// //   stompClient.onWebSocketError =
+// //     (event) => {
+
+// //       console.error(
+// //         "ONLINE USER WS ERROR",
+// //         event
+// //       );
+
+// //     };
+
+// //   stompClient.onConnect = () => {
+
+// //     console.log(
+// //       "WEBSOCKET CONNECTED",
+// //       userName
+// //     );
+
+// //     stompClient?.subscribe(
+
+// //       "/topic/online-users",
+
+// //       (message) => {
+
+// //         console.log(
+// //           "ONLINE USERS RECEIVED",
+// //           message.body
+// //         );
+
+// //         const users =
+// //           JSON.parse(
+// //             message.body
+// //           );
+
+// //         console.log(
+// //           "BEFORE CALLBACK"
+// //         );
+
+// //         onUsersChanged(
+// //           users
+// //         );
+
+// //         console.log(
+// //           "AFTER CALLBACK"
+// //         );
+
+// //       }
+
+// //     );
+
+// //     stompClient?.publish({
+
+// //       destination:
+// //         "/app/user/connect",
+
+// //       body: JSON.stringify({
+
+// //         id: userId,
+
+// //         name: userName,
+
+// //       }),
+
+// //     });
+
+// //     console.log(
+// //       "USER CONNECT SENT",
+// //       userName
+// //     );
+
+// //   };
+
+// //   stompClient.activate();
+
+// // }
+
+// // export function notifyUserDisconnect(
+// //   userId: number
+// // ) {
+
+// //   if (
+// //     !stompClient?.connected
+// //   ) {
+// //     return;
+// //   }
+
+// //   stompClient.publish({
+
+// //     destination:
+// //       "/app/user/disconnect",
+
+// //     body: JSON.stringify(
+// //       userId
+// //     ),
+
+// //   });
+
+// // }
+
+// // export function disconnectOnlineUsers() {
+
+// //   stompClient?.deactivate();
+
+// // }
 // // import SockJS from "sockjs-client";
 // // import { Client } from "@stomp/stompjs";
 
@@ -178,252 +752,12 @@
 // //     stompClient?.deactivate();
 
 // // }
-// // import SockJS from "sockjs-client";
-// // import { Client } from "@stomp/stompjs";
-
-// // let stompClient: Client | null = null;
-
-// // const SOCKET_URL = "http://localhost:8081/ws";
-
-// // export interface OnlineUser {
-// //   id: number;
-// //   name: string;
-// // }
-
-// // export function connectOnlineUsers(
-// //   userId: number,
-// //   userName: string,
-// //   onUsersChanged: (users: OnlineUser[]) => void
-// // ) {
-
-// //   if (stompClient?.connected) {
-// //     return;
-// //   }
-
-// //   const socket = new SockJS(SOCKET_URL);
-
-// //   stompClient = new Client({
-
-// //     webSocketFactory: () => socket,
-
-// //     reconnectDelay: 5000,
-
-// //     debug: (msg) => console.log(msg),
-
-// //   });
-
-// //   stompClient.onConnect = () => {
-
-// //     stompClient?.publish({
-
-// //       destination: "/app/user/connect",
-
-// //       body: JSON.stringify({
-
-// //         id: userId,
-
-// //         name: userName,
-
-// //       }),
-
-// //     });
-
-// //     stompClient?.subscribe(
-
-// //       "/topic/online-users",
-
-// //       (message) => {
-
-// //         const users = JSON.parse(
-// //           message.body
-// //         );
-
-// //         onUsersChanged(users);
-
-// //       }
-
-// //     );
-
-// //   };
-
-// //   stompClient.activate();
-
-// // }
-
-// // export function notifyUserDisconnect(
-// //   userId: number
-// // ) {
-
-// //   if (!stompClient?.connected) {
-// //     return;
-// //   }
-
-// //   stompClient.publish({
-
-// //     destination:
-// //       "/app/user/disconnect",
-
-// //     body: JSON.stringify(
-// //       userId
-// //     ),
-
-// //   });
-
-// // }
-
-// // export function disconnectOnlineUsers() {
-
-// //   stompClient?.deactivate();
-
-// // }
-// // import SockJS from "sockjs-client";
-// // import { Client } from "@stomp/stompjs";
-
-// // let stompClient: Client | null = null;
-
-// // const SOCKET_URL =
-// //   "http://localhost:8081/ws";
-
-// // export interface OnlineUser {
-// //   id: number;
-// //   name: string;
-// // }
-
-// // export function connectOnlineUsers(
-// //   userId: number,
-// //   userName: string,
-// //   onUsersChanged: (users: OnlineUser[]) => void
-// // ) {
-
-// //   if (stompClient?.connected) {
-// //     return;
-// //   }
-
-// //   const socket =
-// //     new SockJS(SOCKET_URL);
-
-// //   stompClient =
-// //     new Client({
-
-// //       webSocketFactory:
-// //         () => socket,
-
-// //       reconnectDelay: 5000,
-
-// //       debug: (msg) =>
-// //         console.log(msg),
-
-// //     });
-
-// //     stompClient.onStompError = (frame) => {
-
-// //   console.error(
-// //     "ONLINE USER STOMP ERROR",
-// //     frame
-// //   );
-
-// // };
-
-
-// // stompClient.onWebSocketError = (event) => {
-
-// //   console.error(
-// //     "ONLINE USER WS ERROR",
-// //     event
-// //   );
-
-// // };
-
-// //   stompClient.onConnect = () => {
-
-// //   console.log(
-// //     "WEBSOCKET CONNECTED",
-// //     userName
-// //   );
-
-// //   stompClient?.publish({
-
-// //     destination:
-// //       "/app/user/connect",
-
-// //     body: JSON.stringify({
-
-// //       id: userId,
-
-// //       name: userName,
-
-// //     }),
-
-// //   });
-
-// //   console.log(
-// //     "USER CONNECT SENT",
-// //     userName
-// //   );
-
-// //   stompClient?.subscribe(
-
-// //     "/topic/online-users",
-
-// //     (message) => {
-
-// //       console.log(
-// //         "ONLINE USERS RECEIVED",
-// //         message.body
-// //       );
-
-// //       const users =
-// //         JSON.parse(
-// //           message.body
-// //         );
-
-// //       onUsersChanged(users);
-
-// //     }
-
-// //   );
-
-// // };
-
-// //   stompClient.activate();
-
-// // }
-
-// // export function notifyUserDisconnect(
-// //   userId: number
-// // ) {
-
-// //   if (
-// //     !stompClient?.connected
-// //   ) {
-// //     return;
-// //   }
-
-// //   stompClient.publish({
-
-// //     destination:
-// //       "/app/user/disconnect",
-
-// //     body: JSON.stringify(
-// //       userId
-// //     ),
-
-// //   });
-
-// // }
-
-// // export function disconnectOnlineUsers() {
-
-// //   stompClient?.deactivate();
-
-// // }
 // import SockJS from "sockjs-client";
 // import { Client } from "@stomp/stompjs";
 
 // let stompClient: Client | null = null;
 
-// const SOCKET_URL =
-//   "http://localhost:8081/ws";
+// const SOCKET_URL = "http://localhost:8081/ws";
 
 // export interface OnlineUser {
 //   id: number;
@@ -433,95 +767,30 @@
 // export function connectOnlineUsers(
 //   userId: number,
 //   userName: string,
-//   onUsersChanged: (users: any) => void
+//   onUsersChanged: (users: OnlineUser[]) => void
 // ) {
 
 //   if (stompClient?.connected) {
-//     console.log(
-//       "ONLINE WS ALREADY CONNECTED"
-//     );
 //     return;
 //   }
 
-//   const socket =
-//     new SockJS(SOCKET_URL);
+//   const socket = new SockJS(SOCKET_URL);
 
-//   stompClient =
-//     new Client({
+//   stompClient = new Client({
 
-//       webSocketFactory:
-//         () => socket,
+//     webSocketFactory: () => socket,
 
-//       reconnectDelay: 5000,
+//     reconnectDelay: 5000,
 
-//       debug: (msg) =>
-//         console.log(msg),
+//     debug: (msg) => console.log(msg),
 
-//     });
-
-//   stompClient.onStompError =
-//     (frame) => {
-
-//       console.error(
-//         "ONLINE USER STOMP ERROR",
-//         frame
-//       );
-
-//     };
-
-//   stompClient.onWebSocketError =
-//     (event) => {
-
-//       console.error(
-//         "ONLINE USER WS ERROR",
-//         event
-//       );
-
-//     };
+//   });
 
 //   stompClient.onConnect = () => {
 
-//     console.log(
-//       "WEBSOCKET CONNECTED",
-//       userName
-//     );
-
-//     stompClient?.subscribe(
-
-//       "/topic/online-users",
-
-//       (message) => {
-
-//         console.log(
-//           "ONLINE USERS RECEIVED",
-//           message.body
-//         );
-
-//         const users =
-//           JSON.parse(
-//             message.body
-//           );
-
-//         console.log(
-//           "BEFORE CALLBACK"
-//         );
-
-//         onUsersChanged(
-//           users
-//         );
-
-//         console.log(
-//           "AFTER CALLBACK"
-//         );
-
-//       }
-
-//     );
-
 //     stompClient?.publish({
 
-//       destination:
-//         "/app/user/connect",
+//       destination: "/app/user/connect",
 
 //       body: JSON.stringify({
 
@@ -533,9 +802,20 @@
 
 //     });
 
-//     console.log(
-//       "USER CONNECT SENT",
-//       userName
+//     stompClient?.subscribe(
+
+//       "/topic/online-users",
+
+//       (message) => {
+
+//         const users = JSON.parse(
+//           message.body
+//         );
+
+//         onUsersChanged(users);
+
+//       }
+
 //     );
 
 //   };
@@ -548,9 +828,7 @@
 //   userId: number
 // ) {
 
-//   if (
-//     !stompClient?.connected
-//   ) {
+//   if (!stompClient?.connected) {
 //     return;
 //   }
 
@@ -580,177 +858,58 @@
 // const SOCKET_URL = "http://localhost:8081/ws";
 
 // export interface OnlineUser {
-
-//     id: number;
-
-//     name: string;
-
+//   id: number;
+//   name: string;
 // }
 
 // export function connectOnlineUsers(
-
-//     userId: number,
-
-//     userName: string,
-
-//     onUsersChanged: (users: OnlineUser[]) => void
-
+//   userId: number,
+//   userName: string,
+//   onUsersChanged: (users: OnlineUser[]) => void
 // ) {
+//   if (stompClient?.connected) {
+//     return;
+//   }
 
-//     if (stompClient?.connected) {
+//   const socket = new SockJS(SOCKET_URL);
 
-//         console.log("Already Connected");
+//   stompClient = new Client({
+//     webSocketFactory: () => socket,
+//     reconnectDelay: 5000,
+//     debug: (msg) => console.log(msg),
+//   });
 
-//         return;
-
-//     }
-
-//     const socket = new SockJS(SOCKET_URL);
-
-//     stompClient = new Client({
-
-//         webSocketFactory: () => socket,
-
-//         reconnectDelay: 5000,
-
-//         debug: (msg) => console.log(msg),
-
+//   stompClient.onConnect = () => {
+//     stompClient?.publish({
+//       destination: "/app/user/connect",
+//       body: JSON.stringify({
+//         id: userId,
+//         name: userName,
+//       }),
 //     });
 
-//     stompClient.onConnect = () => {
+//     stompClient?.subscribe("/topic/online-users", (message) => {
+//       const users = JSON.parse(message.body);
+//       onUsersChanged(users);
+//     });
+//   };
 
-//         console.log("Connected For Online Users");
+//   stompClient.activate();
+// }
 
-//         stompClient?.publish({
+// export function notifyUserDisconnect(userId: number) {
+//   if (!stompClient?.connected) {
+//     return;
+//   }
 
-//             destination: "/app/user/connect",
-
-//             body: JSON.stringify({
-
-//                 id: userId,
-
-//                 name: userName
-
-//             })
-
-//         });
-
-//         stompClient?.subscribe(
-
-//             "/topic/online-users",
-
-//             (message) => {
-
-//                 const users = JSON.parse(message.body);
-
-//                 onUsersChanged(users);
-
-//             }
-
-//         );
-
-//     };
-
-//     stompClient.activate();
-
+//   stompClient.publish({
+//     destination: "/app/user/disconnect",
+//     body: JSON.stringify(userId),
+//   });
 // }
 
 // export function disconnectOnlineUsers() {
-
-//     stompClient?.deactivate();
-
-// }
-// import SockJS from "sockjs-client";
-// import { Client } from "@stomp/stompjs";
-
-// let stompClient: Client | null = null;
-
-// const SOCKET_URL = "http://localhost:8081/ws";
-
-// export interface OnlineUser {
-
-//     id: number;
-
-//     name: string;
-
-// }
-
-// export function connectOnlineUsers(
-
-//     userId: number,
-
-//     userName: string,
-
-//     onUsersChanged: (users: OnlineUser[]) => void
-
-// ) {
-
-//     if (stompClient?.connected) {
-
-//         return;
-
-//     }
-
-//     const socket = new SockJS(SOCKET_URL);
-
-//     stompClient = new Client({
-
-//         webSocketFactory: () => socket,
-
-//         reconnectDelay: 5000,
-
-//         debug: (msg) => console.log(msg)
-
-//     });
-
-//     stompClient.onConnect = () => {
-
-//         console.log("Online User Connected");
-
-//         stompClient?.subscribe(
-
-//             "/topic/online-users",
-
-//             (message) => {
-
-//                 const users = JSON.parse(message.body);
-
-//                 onUsersChanged(users);
-
-//             }
-
-//         );
-
-//         stompClient?.publish({
-
-//             destination: "/app/user/connect",
-
-//             body: JSON.stringify({
-
-//                 id: userId,
-
-//                 name: userName
-
-//             })
-
-//         });
-
-//     };
-
-//     stompClient.onStompError = (frame) => {
-
-//         console.error(frame);
-
-//     };
-
-//     stompClient.activate();
-
-// }
-
-// export function disconnectOnlineUsers() {
-
-//     stompClient?.deactivate();
-
+//   stompClient?.deactivate();
 // }
 import SockJS from "sockjs-client";
 import { Client } from "@stomp/stompjs";
@@ -769,7 +928,6 @@ export function connectOnlineUsers(
   userName: string,
   onUsersChanged: (users: OnlineUser[]) => void
 ) {
-
   if (stompClient?.connected) {
     return;
   }
@@ -777,76 +935,45 @@ export function connectOnlineUsers(
   const socket = new SockJS(SOCKET_URL);
 
   stompClient = new Client({
-
     webSocketFactory: () => socket,
-
     reconnectDelay: 5000,
-
     debug: (msg) => console.log(msg),
-
   });
 
   stompClient.onConnect = () => {
-
     stompClient?.publish({
-
       destination: "/app/user/connect",
-
       body: JSON.stringify({
-
         id: userId,
-
         name: userName,
-
       }),
-
     });
 
-    stompClient?.subscribe(
-
-      "/topic/online-users",
-
-      (message) => {
-
-        const users = JSON.parse(
-          message.body
-        );
-
-        onUsersChanged(users);
-
-      }
-
-    );
-
+    stompClient?.subscribe("/topic/online-users", (message) => {
+      const users = JSON.parse(message.body);
+      onUsersChanged(users);
+    });
   };
 
   stompClient.activate();
-
 }
 
-export function notifyUserDisconnect(
-  userId: number
-) {
-
+export function notifyUserDisconnect(userId: number) {
   if (!stompClient?.connected) {
     return;
   }
 
   stompClient.publish({
-
-    destination:
-      "/app/user/disconnect",
-
-    body: JSON.stringify(
-      userId
-    ),
-
+    destination: "/app/user/disconnect",
+    body: JSON.stringify({ id: userId }),
   });
-
 }
 
-export function disconnectOnlineUsers() {
-
+export function disconnectOnlineUsers(userId?: number) {
+  if (stompClient?.connected && userId) {
+    // Explicitly notify the backend right before disconnecting
+    notifyUserDisconnect(userId);
+  }
   stompClient?.deactivate();
-
+  stompClient = null;
 }
