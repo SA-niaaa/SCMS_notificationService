@@ -573,15 +573,28 @@ import {
 } from "react";
 
 interface EmployeeType {
-  id: number;
-  employeeId: string;
-  name: string;
-  email: string;
-  mobile: string;
-  department: string;
+  employeeId: number;
+
+  employeeCode: string;
+
+  employeeName: string;
+
   designation: string;
-  salary: number;
+
+  department: string;
+
+  phone: string;
+
+  email: string;
+
+  address: string;
+
   joiningDate: string;
+
+  salary: number;
+
+  storeId: number;
+
   status: string;
 }
 
@@ -653,8 +666,8 @@ function Employee() {
         await loadEmployees();
 
         addActivity(
-          `Employee Added: ${employee.name}`
-        );
+  `Employee Added: ${employee.employeeName}`
+);
 
       } catch (error) {
 
@@ -706,14 +719,14 @@ function Employee() {
       try {
 
         await updateEmployee(
-          updatedEmployee.id,
-          updatedEmployee
-        );
+  updatedEmployee.employeeId,
+  updatedEmployee
+);
 
         await loadEmployees();
 
         addActivity(
-          `Employee Updated: ${updatedEmployee.name}`
+          `Employee Updated: ${updatedEmployee.employeeName}`
         );
 
         setEditingEmployee(
@@ -729,14 +742,14 @@ function Employee() {
     };
 
   const filteredEmployees =
-    employees.filter(
-      (employee) =>
-        (employee.name || "")
-          .toLowerCase()
-          .includes(
-            search.toLowerCase()
-          )
-    );
+  employees.filter(
+    (employee) =>
+      (employee.employeeName || "")
+        .toLowerCase()
+        .includes(
+          search.toLowerCase()
+        )
+  );
 
   return (
     <MainLayout>

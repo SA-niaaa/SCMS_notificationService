@@ -910,6 +910,7 @@ import SupplierTable from "../../components/SupplierTable";
 import AddSupplierModal from "../../components/AddSupplierModal";
 
 import { addActivity } from "../../services/activityService";
+import { sendNotification } from "../../services/notificationService";
 // import { getSuppliers } from "../../services/api";
 // import {
 //   getSuppliers,
@@ -996,6 +997,11 @@ function SupplierPage() {
       addActivity(
         `Supplier Added: ${savedSupplier.name}`
       );
+      await sendNotification({
+  senderId: 1,
+  receiverId: 1,
+  message: `Supplier Created : ${savedSupplier.name}`,
+});
 
       setShowModal(false);
 
@@ -1024,33 +1030,35 @@ function SupplierPage() {
   //   );
   // };
   const handleDeleteSupplier =
-  async (id: number) => {
+async (id: number) => {
 
-    try {
+  try {
 
-      await deleteSupplier(id);
+    await deleteSupplier(id);
 
-      setSuppliers((prev) =>
-        prev.filter(
-          (supplier) =>
-            Number(supplier.id) !== id
-        )
-      );
+    setSuppliers((prev) =>
+      prev.filter(
+        (supplier) =>
+          Number(
+            supplier.supplierId
+          ) !== id
+      )
+    );
 
-      addActivity(
-        "Supplier Deleted"
-      );
+    addActivity(
+      "Supplier Deleted"
+    );
 
-    } catch (error) {
+  } catch (error) {
 
-      console.error(
-        "Delete failed:",
-        error
-      );
+    console.error(
+      "Delete failed:",
+      error
+    );
 
-    }
+  }
 
-  };
+};
 
   // const handleUpdateSupplier = (
   //   updatedSupplier: Supplier
@@ -1071,58 +1079,43 @@ function SupplierPage() {
   //   setEditingSupplier(null);
   // };
   const handleUpdateSupplier =
-  async (
-    updatedSupplier: Supplier
-  ) => {
+async (
+  updatedSupplier: Supplier
+) => {
 
-    try {
+  try {
 
-      const savedSupplier =
-        await updateSupplier(
-          Number(
-            updatedSupplier.id
-          ),
-          updatedSupplier
-        );
+    await updateSupplier(
+      Number(
+        updatedSupplier.supplierId
+      ),
+      updatedSupplier
+    );
 
-      setSuppliers((prev) =>
-        prev.map(
-          (supplier) =>
-            Number(
-              supplier.id
-            ) ===
-            Number(
-              savedSupplier.id
-            )
-              ? savedSupplier
-              : supplier
-        )
-      );
+    const data =
+      await getSuppliers();
 
-      addActivity(
-        `Supplier Updated: ${savedSupplier.name}`
-      );
+    setSuppliers(data);
 
-      setEditingSupplier(
-        null
-      );
+    addActivity(
+      `Supplier Updated: ${updatedSupplier.supplierName}`
+    );
 
-      setShowModal(false);
+    setEditingSupplier(null);
+    setShowModal(false);
 
-    } catch (error) {
+  } catch (error) {
 
-      console.error(
-        error
-      );
+    console.error(error);
 
-    }
+  }
 
-  };
+};
 
   const filteredSuppliers =
     suppliers.filter(
       (supplier) =>
-        supplier.name
+        supplier.supplierName
           ?.toLowerCase()
           .includes(
             search.toLowerCase()

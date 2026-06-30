@@ -8,23 +8,13 @@
 //   storeType: string;
 // }
 export interface StoreType {
-  id: number;
-
-  district: string;
-
-  subdivision: string;
-
-  block: string;
-
+  storeId: number;
   storeCode: string;
-
   storeName: string;
-
+  location: string;
   storeType: string;
-
-  storeIncharge: string;
-
-  capacity: string;
-
+  managerName: string;
+  contactNumber: string;
+  email: string;
   status: string;
 }

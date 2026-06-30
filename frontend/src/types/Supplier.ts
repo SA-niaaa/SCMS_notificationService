@@ -6,19 +6,12 @@
 //   city: string;
 // }
 export interface Supplier {
-  id: number;
-
-  name: string;
-
-  description: string;
-
-  address: string;
-
+  supplierId: number;
+  supplierCode: string;
+  supplierName: string;
+  contactPerson: string;
   phone: string;
-
   email: string;
-
-  licenseNo: string;
-
-  licenseValidTill: string;
+  address: string;
+  gstNumber: string;
 }

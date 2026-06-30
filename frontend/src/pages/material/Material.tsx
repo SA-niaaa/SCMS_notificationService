@@ -570,13 +570,24 @@ import {
 import { addActivity } from "../../services/activityService";
 import { useEffect, useState } from "react";
 
+// interface MaterialType {
+//   id: number;
+//   name: string;
+//   category: string;
+//   quantity: number;
+//   unit: string;
+//   supplier: string;
+//   description: string;
+// }
 interface MaterialType {
-  id: number;
-  name: string;
+  materialId: number;
+  materialCode: string;
+  materialName: string;
   category: string;
-  quantity: number;
+  currentStock: number;
+  minimumStock: number;
   unit: string;
-  supplier: string;
+  unitPrice: number;
   description: string;
 }
 
@@ -626,20 +637,39 @@ function Material() {
 
       await fetchMaterials();
 
+      // addActivity(
+      //   `Material Added: ${material.name}`
+      // );
       addActivity(
-        `Material Added: ${material.name}`
-      );
+  `Material Added: ${material.materialName}`
+);
 
     };
 
-  const handleDeleteMaterial =
-    async (
-      id: number
-    ) => {
+  // const handleDeleteMaterial =
+  //   async (
+  //     id: number
+  //   ) => {
 
-      await deleteMaterial(
-        id
-      );
+  //     await deleteMaterial(
+  //       id
+  //     );
+
+  //     await fetchMaterials();
+
+  //     addActivity(
+  //       "Material Deleted"
+  //     );
+
+  //   };
+  const handleDeleteMaterial =
+  async (
+    id: number
+  ) => {
+
+    try {
+
+      await deleteMaterial(id);
 
       await fetchMaterials();
 
@@ -647,39 +677,79 @@ function Material() {
         "Material Deleted"
       );
 
-    };
+    } catch (error) {
 
-  const handleUpdateMaterial =
-    async (
-      updatedMaterial: MaterialType
-    ) => {
+      console.error(error);
 
-      await updateMaterial(
-        updatedMaterial.id,
-        updatedMaterial
-      );
+    }
 
-      await fetchMaterials();
+  };
 
-      addActivity(
-        `Material Updated: ${updatedMaterial.name}`
-      );
+//   const handleUpdateMaterial =
+//     async (
+//       updatedMaterial: MaterialType
+//     ) => {
 
-      setEditingMaterial(
-        null
-      );
+//       // await updateMaterial(
+//       //   updatedMaterial.id,
+//       //   updatedMaterial
+//       // );
+//       await updateMaterial(
+//     updatedMaterial.materialId,
+//     updatedMaterial
+// );
 
-    };
+//       await fetchMaterials();
 
-  const filteredMaterials =
-    materials.filter(
-      (material) =>
-        material.name
-          .toLowerCase()
-          .includes(
-            search.toLowerCase()
-          )
+//       // addActivity(
+//       //   `Material Updated: ${updatedMaterial.name}`
+//       // );
+// addActivity(
+//   `Material Updated: ${updatedMaterial.materialName}`
+// );
+//       setEditingMaterial(
+//         null
+//       );
+
+//     };
+const handleUpdateMaterial =
+  async (
+    updatedMaterial: any
+  ) => {
+
+    await updateMaterial(
+      editingMaterial!.materialId,
+      updatedMaterial
     );
+
+    await fetchMaterials();
+
+    addActivity(
+      `Material Updated: ${updatedMaterial.materialName}`
+    );
+
+    setEditingMaterial(null);
+
+  };
+
+  // const filteredMaterials =
+  //   materials.filter(
+  //     (material) =>
+  //       material.name
+  //         .toLowerCase()
+  //         .includes(
+  //           search.toLowerCase()
+  //         )
+  //   );
+  const filteredMaterials =
+  materials.filter(
+    (material) =>
+      (material.materialName || "")
+        .toLowerCase()
+        .includes(
+          search.toLowerCase()
+        )
+  );
 
   return (
     <MainLayout>

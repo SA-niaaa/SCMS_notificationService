@@ -120,6 +120,9 @@ app.get("/", (req, res) => {
   );
 
 });
+app.get("/", (req, res) => {
+    res.send("SCMS Backend Running Successfully 🚀");
+});
 
 const PORT = 5001;
 

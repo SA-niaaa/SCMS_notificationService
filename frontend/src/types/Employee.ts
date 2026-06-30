@@ -6,23 +6,27 @@
 //   salary: number;
 // }
 export interface Employee {
-  id: number;
+  employeeId: number;
 
-  employeeId: string;
+  employeeCode: string;
 
-  name: string;
-
-  email: string;
-
-  mobile: string;
-
-  department: string;
+  employeeName: string;
 
   designation: string;
 
-  salary: number;
+  department: string;
+
+  phone: string;
+
+  email: string;
+
+  address: string;
 
   joiningDate: string;
+
+  salary: number;
+
+  storeId: number;
 
   status: string;
 }

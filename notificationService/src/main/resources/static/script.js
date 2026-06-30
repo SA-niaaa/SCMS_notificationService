@@ -1,171 +1,869 @@
-let stompClient = null;
+// // // const API_URL = "http://localhost:8081/notifications";
 
-let currentUserId = null;
+// // // async function loadNotifications() {
 
-function connectUser() {
+// // //     const response = await fetch(API_URL + "/all");
 
-    currentUserId =
-        document.getElementById(
-            "currentUser"
-        ).value;
+// // //     const data = await response.json();
 
-    const socket =
-        new SockJS("/ws");
+// // //     const container = document.getElementById("notifications");
 
-    stompClient =
-        Stomp.over(socket);
+// // //     container.innerHTML = "";
 
-    stompClient.connect(
-        {},
-        function () {
+// // //     data.forEach(notification => {
 
-            console.log(
-                "Connected"
-            );
+// // //         container.innerHTML += `
+// // //             <div class="notification">
+// // //                 <h3>${notification.title}</h3>
+// // //                 <p>${notification.message}</p>
 
-            document.getElementById(
-                "status"
-            ).innerText =
-                "WebSocket Connected";
+// // //                 <button onclick="deleteNotification(${notification.id})">
+// // //                     Delete
+// // //                 </button>
+// // //             </div>
+// // //         `;
+// // //     });
+// // // }
 
-            stompClient.subscribe(
-                "/topic/notifications/1",
+// // // async function addNotification() {
 
-                function (
-                    notification
-                ) {
+// // //     const title = document.getElementById("title").value;
 
-                    console.log(
-                        "NOTIFICATION RECEIVED"
-                    );
+// // //     const message = document.getElementById("message").value;
 
-                    console.log(
-                        notification.body
-                    );
+// // //     await fetch(API_URL, {
 
-                    const data =
-                        JSON.parse(
-                            notification.body
-                        );
+// // //         method: "POST",
 
-                    console.log(
-                        data
-                    );
+// // //         headers: {
+// // //             "Content-Type": "application/json"
+// // //         },
 
-                    const entityName =
+// // //         body: JSON.stringify({
+// // //             title,
+// // //             message
+// // //         })
+// // //     });
 
-                        data.employeeName ||
+// // //     loadNotifications();
+// // // }
 
-                        data.materialName ||
+// // // async function deleteNotification(id) {
 
-                        data.manufacturerName ||
+// // //     await fetch(API_URL + "/" + id, {
+// // //         method: "DELETE"
+// // //     });
 
-                        data.supplierName ||
+// // //     loadNotifications();
+// // // }
 
-                        data.storeName ||
+// // // loadNotifications();
 
-                        "Unknown";
+// // let stompClient = null;
 
-                    const eventText =
-                        data.event
-                            .replaceAll(
-                                "_",
-                                " "
-                            );
+// // let currentUserId = null;
 
-                    showNotification(
-                        `${eventText} : ${entityName}`
-                    );
+// // function connectUser() {
 
-                }
-            );
+// //     currentUserId = document.getElementById("currentUser").value;
 
-        }
-    );
+// //     const socket = new SockJS('/ws');
 
-}
+// //     stompClient = Stomp.over(socket);
 
-function sendNotification() {
+// //     stompClient.connect({}, function () {
 
-    const receiverId =
-        document.getElementById(
-            "targetUserId"
-        ).value;
+// //         console.log("Connected");
 
-    const message =
-        document.getElementById(
-            "message"
-        ).value;
+// //         document.getElementById("status").innerText =
+// //             "WebSocket Connected";
 
-    const notification = {
+// //         // stompClient.subscribe(
+// //         //     '/topic/notifications/' + currentUserId,
 
-        senderId:
-            currentUserId,
+// //         //     function (notification) {
 
-        receiverId:
-            receiverId,
+// //         //         const data = JSON.parse(notification.body);
 
-        message:
-            message
+// //         //         showNotification(data.message);
+// //         //     }
+// //         // );
+// //         stompClient.subscribe(
+// //     '/topic/notifications/1',
 
-    };
+// //     // function (notification) {
 
-    stompClient.send(
-        "/app/sendMessage",
-        {},
-        JSON.stringify(
-            notification
-        )
-    );
+// //     //     const data = JSON.parse(notification.body);
 
-}
+// //     //     console.log("Notification Received:", data);
 
-function showNotification(
-    message
-) {
+// //     //     showNotification(
+// //     //         `${data.event} : ${data.supplierName}`
+// //     //     );
+// //     // }
+// //     function(notification) {
 
-    console.log(
-        "showNotification called"
-    );
+// //     console.log(
+// //         "NOTIFICATION RECEIVED"
+// //     );
 
-    const container =
-        document.getElementById(
-            "notifications"
-        );
+// //     console.log(
+// //         notification.body
+// //     );
 
-    container.innerHTML =
+// //     const data =
+// //         JSON.parse(notification.body);
 
-        `
-        <div style="
-            background:#1e293b;
-            color:white;
-            padding:12px;
-            margin-top:10px;
-            border-radius:8px;
-            border-left:5px solid #22c55e;
-        ">
-            <h3>NEW EVENT</h3>
-            <p>${message}</p>
+// //     console.log(data);
+
+// // }
+// // );
+// //     });
+// // }
+
+// // function sendNotification() {
+
+// //     const receiverId =
+// //         document.getElementById("targetUserId").value;
+
+// //     const message =
+// //         document.getElementById("message").value;
+
+// //     const notification = {
+
+// //         senderId: currentUserId,
+
+// //         receiverId: receiverId,
+
+// //         message: message
+// //     };
+
+// //     stompClient.send(
+// //         "/app/sendMessage",
+// //         {},
+// //         JSON.stringify(notification)
+// //     );
+// // }
+
+// // function showNotification(message) {
+
+// //     const container =
+// //         document.getElementById("notifications");
+
+// //     container.innerHTML += `
+
+// //         <div class="notification">
+// //             <h3>NEW MESSAGE</h3>
+// //             <p>${message}</p>
+// //         </div>
+
+// //     `;
+// // }
+// // //     container.innerHTML += `
+
+// // //         <div class="notification">
+// // //             <h3>NEW MESSAGE</h3>
+// // //             <p>${message}</p>
+// // //         </div>
+
+// // //     `;
+// // // }
+// let stompClient = null;
+
+// let currentUserId = null;
+
+// function connectUser() {
+
+//     currentUserId =
+//         document.getElementById("currentUser").value;
+
+//     const socket =
+//         new SockJS('/ws');
+
+//     stompClient =
+//         Stomp.over(socket);
+
+//     stompClient.connect({}, function () {
+
+//         console.log("Connected");
+
+//         document.getElementById("status").innerText =
+//             "WebSocket Connected";
+
+//         stompClient.subscribe(
+//             '/topic/notifications/1',
+
+//             function(notification) {
+
+//                 console.log(
+//                     "NOTIFICATION RECEIVED"
+//                 );
+
+//                 console.log(
+//                     notification.body
+//                 );
+
+//                 const data =
+//                     JSON.parse(
+//                         notification.body
+//                     );
+
+//                 console.log(data);
+
+//                 showNotification(
+//                     `${data.event} : ${data.supplierName}`
+//                 );
+//             }
+//         );
+//     });
+// }
+
+// function sendNotification() {
+
+//     const receiverId =
+//         document.getElementById("targetUserId").value;
+
+//     const message =
+//         document.getElementById("message").value;
+
+//     const notification = {
+
+//         senderId: currentUserId,
+
+//         receiverId: receiverId,
+
+//         message: message
+//     };
+
+//     stompClient.send(
+//         "/app/sendMessage",
+//         {},
+//         JSON.stringify(notification)
+//     );
+// }
+
+// function showNotification(message) {
+
+//     const container =
+//         document.getElementById(
+//             "notifications"
+//         );
+
+//     container.innerHTML += `
+//         <div class="notification">
+//             <h3>NEW EVENT</h3>
+//             <p>${message}</p>
+//         </div>
+//     `;
+// }
+// let stompClient = null;
+
+// let currentUserId = null;
+
+// function connectUser() {
+
+//     currentUserId =
+//         document.getElementById("currentUser").value;
+
+//     const socket =
+//         new SockJS('/ws');
+
+//     stompClient =
+//         Stomp.over(socket);
+
+//     stompClient.connect({}, function () {
+
+//         console.log("Connected");
+
+//         document.getElementById("status").innerText =
+//             "WebSocket Connected";
+
+//         stompClient.subscribe(
+//             "/topic/notifications/1",
+
+//             function (notification) {
+
+//                 console.log(
+//                     "NOTIFICATION RECEIVED"
+//                 );
+
+//                 console.log(
+//                     notification.body
+//                 );
+
+//                 const data =
+//                     JSON.parse(
+//                         notification.body
+//                     );
+
+//                 console.log(data);
+
+//                 showNotification(
+//                     `${data.event} : ${data.supplierName}`
+//                 );
+//             }
+//         );
+//     });
+// }
+
+// function sendNotification() {
+
+//     const receiverId =
+//         document.getElementById("targetUserId").value;
+
+//     const message =
+//         document.getElementById("message").value;
+
+//     const notification = {
+
+//         senderId: currentUserId,
+
+//         receiverId: receiverId,
+
+//         message: message
+//     };
+
+//     stompClient.send(
+//         "/app/sendMessage",
+//         {},
+//         JSON.stringify(notification)
+//     );
+// }
+
+// function showNotification(message) {
+
+//     console.log(
+//         "showNotification called"
+//     );
+
+//     const container =
+//         document.getElementById(
+//             "notifications"
+//         );
+
+//     console.log(
+//         "Container:",
+//         container
+//     );
+
+//     container.innerHTML += `
+//         <div style="
+//             background:#1e293b;
+//             color:white;
+//             padding:12px;
+//             margin-top:10px;
+//             border-radius:8px;
+//             border-left:5px solid #22c55e;
+//         ">
+//             <h3>NEW EVENT</h3>
+//             <p>${message}</p>
+//         </div>
+//     `;
+// }
+// let stompClient = null;
+
+// let currentUserId = null;
+
+// function connectUser() {
+
+//     currentUserId =
+//         document.getElementById("currentUser").value;
+
+//     const socket =
+//         new SockJS('/ws');
+
+//     stompClient =
+//         Stomp.over(socket);
+
+//     stompClient.connect({}, function () {
+
+//         console.log("Connected");
+
+//         document.getElementById("status").innerText =
+//             "WebSocket Connected";
+
+//         stompClient.subscribe(
+//             "/topic/notifications/1",
+
+//             function (notification) {
+
+//                 console.log(
+//                     "NOTIFICATION RECEIVED"
+//                 );
+
+//                 console.log(
+//                     notification.body
+//                 );
+
+//                 const data =
+//                     JSON.parse(
+//                         notification.body
+//                     );
+
+//                 console.log(data);
+
+//                 // const entityName =
+//                 //     data.supplierName ||
+//                 //     data.storeName ||
+//                 //     data.employeeName ||
+//                 //     data.materialName ||
+//                 //     data.manufacturerName ||
+//                 //     "Unknown";
+
+//                 // showNotification(
+//                 //     `${data.event} : ${entityName}`
+//                 // );
+//                 const entityName =
+//     data.employeeName ||
+//     data.materialName ||
+//     data.supplierName ||
+//     data.storeName ||
+//     "Unknown";
+
+// const eventText =
+//     data.event
+//         .replaceAll("_", " ");
+
+// showNotification(
+//     `${eventText} : ${entityName}`
+// );
+//             }
+//         );
+//     });
+// }
+
+// function sendNotification() {
+
+//     const receiverId =
+//         document.getElementById("targetUserId").value;
+
+//     const message =
+//         document.getElementById("message").value;
+
+//     const notification = {
+
+//         senderId: currentUserId,
+
+//         receiverId: receiverId,
+
+//         message: message
+//     };
+
+//     stompClient.send(
+//         "/app/sendMessage",
+//         {},
+//         JSON.stringify(notification)
+//     );
+// }
+
+// function showNotification(message) {
+
+//     console.log(
+//         "showNotification called"
+//     );
+
+//     const container =
+//         document.getElementById(
+//             "notifications"
+//         );
+
+//     console.log(
+//         "Container:",
+//         container
+//     );
+
+//     container.innerHTML =
+//         `
+//         <div style="
+//             background:#1e293b;
+//             color:white;
+//             padding:12px;
+//             margin-top:10px;
+//             border-radius:8px;
+//             border-left:5px solid #22c55e;
+//         ">
+//             <h3>NEW EVENT</h3>
+//             <p>${message}</p>
+//         </div>
+//         `
+//         +
+//         container.innerHTML;
+
+//     // Keep only latest 10 notifications
+
+//     const notifications =
+//         container.children;
+
+//     while (
+//         notifications.length > 10
+//     ) {
+//         container.removeChild(
+//             notifications[
+//                 notifications.length - 1
+//             ]
+//         );
+//     }
+// }
+// let stompClient = null;
+
+// let currentUserId = null;
+
+// function connectUser() {
+
+//     currentUserId =
+//         document.getElementById(
+//             "currentUser"
+//         ).value;
+
+//     const socket =
+//         new SockJS("/ws");
+
+//     stompClient =
+//         Stomp.over(socket);
+
+//     stompClient.connect(
+//         {},
+//         function () {
+
+//             console.log(
+//                 "Connected"
+//             );
+
+//             document.getElementById(
+//                 "status"
+//             ).innerText =
+//                 "WebSocket Connected";
+
+//             stompClient.subscribe(
+//                 "/topic/notifications/1",
+
+//                 function (
+//                     notification
+//                 ) {
+
+//                     console.log(
+//                         "NOTIFICATION RECEIVED"
+//                     );
+
+//                     console.log(
+//                         notification.body
+//                     );
+
+//                     const data =
+//                         JSON.parse(
+//                             notification.body
+//                         );
+
+//                     console.log(
+//                         data
+//                     );
+
+//                     const entityName =
+
+//                         data.employeeName ||
+
+//                         data.materialName ||
+
+//                         data.manufacturerName ||
+
+//                         data.supplierName ||
+
+//                         data.storeName ||
+
+//                         "Unknown";
+
+//                     const eventText =
+//                         data.event
+//                             .replaceAll(
+//                                 "_",
+//                                 " "
+//                             );
+
+//                     showNotification(
+//                         `${eventText} : ${entityName}`
+//                     );
+
+//                 }
+//             );
+
+//         }
+//     );
+
+// }
+
+// function sendNotification() {
+
+//     const receiverId =
+//         document.getElementById(
+//             "targetUserId"
+//         ).value;
+
+//     const message =
+//         document.getElementById(
+//             "message"
+//         ).value;
+
+//     const notification = {
+
+//         senderId:
+//             currentUserId,
+
+//         receiverId:
+//             receiverId,
+
+//         message:
+//             message
+
+//     };
+
+//     stompClient.send(
+//         "/app/sendMessage",
+//         {},
+//         JSON.stringify(
+//             notification
+//         )
+//     );
+
+// }
+
+// function showNotification(
+//     message
+// ) {
+
+//     console.log(
+//         "showNotification called"
+//     );
+
+//     const container =
+//         document.getElementById(
+//             "notifications"
+//         );
+
+//     container.innerHTML =
+
+//         `
+//         <div style="
+//             background:#1e293b;
+//             color:white;
+//             padding:12px;
+//             margin-top:10px;
+//             border-radius:8px;
+//             border-left:5px solid #22c55e;
+//         ">
+//             <h3>NEW EVENT</h3>
+//             <p>${message}</p>
+//         </div>
+//         `
+
+//         +
+
+//         container.innerHTML;
+
+//     const notifications =
+//         container.children;
+
+//     while (
+//         notifications.length > 10
+//     ) {
+
+//         container.removeChild(
+//             notifications[
+//                 notifications.length - 1
+//             ]
+//         );
+
+//     }
+
+// }
+import { useNavigate } from "react-router-dom";
+import { logout } from "../services/authService";
+
+import {
+  Home,
+  Lock,
+  Bell,
+} from "lucide-react";
+
+function Navbar() {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
+
+  const openNotifications = () => {
+    navigate("/notifications");
+  };
+
+  return (
+    <div
+      className="
+      h-16
+      bg-[#1f2937]
+      border-b
+      border-gray-700
+      px-6
+      flex
+      items-center
+      justify-between
+      shadow
+      "
+    >
+      {/* Left Side */}
+
+      <div>
+        <h1
+          className="
+          text-xl
+          font-bold
+          text-white
+          "
+        >
+          Supply Chain Management System
+        </h1>
+
+        <p
+          className="
+          text-xs
+          text-gray-400
+          "
+        >
+          Inventory & Resource Management
+        </p>
+      </div>
+
+      {/* Right Side */}
+
+      <div
+        className="
+        flex
+        items-center
+        gap-3
+        "
+      >
+        <div
+          className="
+          text-right
+          "
+        >
+          <p
+            className="
+            text-white
+            font-medium
+            "
+          >
+            Admin
+          </p>
+
+          <p
+            className="
+            text-xs
+            text-gray-400
+            "
+          >
+            System Administrator
+          </p>
         </div>
-        `
 
-        +
+        {/* Avatar */}
 
-        container.innerHTML;
+        <div
+          className="
+          w-10
+          h-10
+          rounded-full
+          bg-green-600
+          flex
+          items-center
+          justify-center
+          font-bold
+          text-white
+          "
+        >
+          A
+        </div>
 
-    const notifications =
-        container.children;
+        {/* Notification */}
 
-    while (
-        notifications.length > 10
-    ) {
+        <button
+          onClick={openNotifications}
+          className="
+          relative
+          bg-yellow-500
+          hover:bg-yellow-600
+          p-2
+          rounded
+          "
+        >
+          <Bell size={18} />
 
-        container.removeChild(
-            notifications[
-                notifications.length - 1
-            ]
-        );
+          {/* Future Notification Count */}
 
-    }
+          <span
+            className="
+            absolute
+            -top-2
+            -right-2
+            bg-red-600
+            text-white
+            text-[10px]
+            w-5
+            h-5
+            rounded-full
+            flex
+            items-center
+            justify-center
+            "
+          >
+            0
+          </span>
+        </button>
 
+        {/* Home */}
+
+        <button
+          className="
+          bg-blue-600
+          hover:bg-blue-700
+          p-2
+          rounded
+          "
+        >
+          <Home size={18} />
+        </button>
+
+        {/* Lock */}
+
+        <button
+          className="
+          bg-gray-700
+          hover:bg-gray-600
+          p-2
+          rounded
+          "
+        >
+          <Lock size={18} />
+        </button>
+
+        {/* Logout */}
+
+        <button
+          onClick={handleLogout}
+          className="
+          bg-red-600
+          hover:bg-red-700
+          px-4
+          py-2
+          rounded
+          text-white
+          "
+        >
+          Logout
+        </button>
+      </div>
+    </div>
+  );
 }
+
+export default Navbar;

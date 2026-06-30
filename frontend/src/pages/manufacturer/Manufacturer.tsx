@@ -599,16 +599,15 @@ import { addActivity } from "../../services/activityService";
 import { useEffect, useState } from "react";
 
 interface ManufacturerType {
-  id: number;
-  name: string;
-  location: string;
-  contact: string;
+  manufacturerId: number;
+  manufacturerCode: string;
+  manufacturerName: string;
+  contactPerson: string;
+  phone: string;
   email: string;
-  gstNo: string;
-  productionType: string;
-  description: string;
+  address: string;
+  website: string;
 }
-
 function Manufacturer() {
   const [manufacturers, setManufacturers] =
     useState<ManufacturerType[]>([]);
@@ -634,10 +633,20 @@ function Manufacturer() {
   const loadManufacturers =
     async () => {
 
-      const data =
-        await getManufacturers();
+      // const data =
+      //   await getManufacturers();
 
-      setManufacturers(data);
+      // setManufacturers(data);
+      const data =
+  await getManufacturers();
+
+console.log("Manufacturers API:", data);
+
+setManufacturers(
+  Array.isArray(data)
+    ? data
+    : []
+);
 
     };
 
@@ -653,7 +662,7 @@ function Manufacturer() {
       await loadManufacturers();
 
       addActivity(
-        `Manufacturer Added: ${manufacturer.name}`
+        `Manufacturer Added: ${manufacturer.manufacturerName}`
       );
 
     };
@@ -681,14 +690,14 @@ function Manufacturer() {
     ) => {
 
       await updateManufacturer(
-        updatedManufacturer.id,
+        updatedManufacturer.manufacturerId,
         updatedManufacturer
       );
 
       await loadManufacturers();
 
       addActivity(
-        `Manufacturer Updated: ${updatedManufacturer.name}`
+        `Manufacturer Updated: ${updatedManufacturer.manufacturerName}`
       );
 
       setEditingManufacturer(
@@ -697,15 +706,26 @@ function Manufacturer() {
 
     };
 
+  // const filteredManufacturers =
+  //   manufacturers.filter(
+  //     (manufacturer) =>
+  //       manufacturer.name
+  //         .toLowerCase()
+  //         .includes(
+  //           search.toLowerCase()
+  //         )
+  //   );
   const filteredManufacturers =
-    manufacturers.filter(
-      (manufacturer) =>
-        manufacturer.name
-          .toLowerCase()
-          .includes(
-            search.toLowerCase()
-          )
-    );
+  Array.isArray(manufacturers)
+    ? manufacturers.filter(
+        (manufacturer) =>
+          manufacturer.manufacturerName
+            .toLowerCase()
+            .includes(
+              search.toLowerCase()
+            )
+      )
+    : [];
 
   return (
     <MainLayout>
