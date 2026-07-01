@@ -9,9 +9,9 @@ const {
 } = require("../rabbitmq");
 
 
-// ======================
+
 // GET ALL MATERIALS
-// ======================
+
 
 router.get("/", (req, res) => {
 
@@ -20,9 +20,9 @@ router.get("/", (req, res) => {
 });
 
 
-// ======================
+
 // CREATE MATERIAL
-// ======================
+
 
 router.post("/", (req, res) => {
 
@@ -67,9 +67,9 @@ router.post("/", (req, res) => {
 });
 
 
-// ======================
+
 // UPDATE MATERIAL
-// ======================
+
 
 router.put("/:id", (req, res) => {
 
@@ -131,9 +131,9 @@ router.put("/:id", (req, res) => {
 });
 
 
-// ======================
+
 // DELETE MATERIAL
-// ======================
+
 
 router.delete("/:id", (req, res) => {
 

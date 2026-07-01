@@ -9,9 +9,9 @@ const {
 } = require("../rabbitmq");
 
 
-// ======================
+
 // GET ALL MANUFACTURERS
-// ======================
+
 
 router.get("/", (req, res) => {
 
@@ -20,9 +20,9 @@ router.get("/", (req, res) => {
 });
 
 
-// ======================
+
 // CREATE MANUFACTURER
-// ======================
+
 
 router.post("/", (req, res) => {
 
@@ -68,9 +68,9 @@ router.post("/", (req, res) => {
 });
 
 
-// ======================
+
 // UPDATE MANUFACTURER
-// ======================
+
 
 router.put("/:id", (req, res) => {
 
@@ -133,9 +133,9 @@ router.put("/:id", (req, res) => {
 });
 
 
-// ======================
+
 // DELETE MANUFACTURER
-// ======================
+
 
 router.delete("/:id", (req, res) => {
 

@@ -6,9 +6,9 @@ const stores = require("../data/stores");
 const { getChannel } = require("../rabbitmq");
 
 
-// ======================
+
 // GET ALL STORES
-// ======================
+
 
 router.get("/", (req, res) => {
 
@@ -19,9 +19,9 @@ router.get("/", (req, res) => {
 });
 
 
-// ======================
+
 // CREATE STORE
-// ======================
+
 
 router.post("/", (req, res) => {
 
@@ -57,9 +57,9 @@ router.post("/", (req, res) => {
 });
 
 
-// ======================
+
 // UPDATE STORE
-// ======================
+
 
 router.put("/:id", (req, res) => {
 
@@ -111,9 +111,9 @@ router.put("/:id", (req, res) => {
 });
 
 
-// ======================
+
 // DELETE STORE
-// ======================
+
 
 router.delete("/:id", (req, res) => {
 

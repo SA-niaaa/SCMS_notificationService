@@ -9,9 +9,8 @@ const {
 } = require("../rabbitmq");
 
 
-// ======================
+
 // GET ALL EMPLOYEES
-// ======================
 
 router.get("/", (req, res) => {
 
@@ -20,9 +19,9 @@ router.get("/", (req, res) => {
 });
 
 
-// ======================
+
 // CREATE EMPLOYEE
-// ======================
+
 
 router.post("/", (req, res) => {
 
@@ -66,9 +65,9 @@ router.post("/", (req, res) => {
 });
 
 
-// ======================
+
 // UPDATE EMPLOYEE
-// ======================
+
 
 router.put("/:id", (req, res) => {
 
@@ -130,9 +129,9 @@ router.put("/:id", (req, res) => {
 });
 
 
-// ======================
+
 // DELETE EMPLOYEE
-// ======================
+
 
 router.delete("/:id", (req, res) => {
 
