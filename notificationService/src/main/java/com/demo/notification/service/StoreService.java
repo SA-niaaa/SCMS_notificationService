@@ -1,39 +1,3 @@
-// package com.demo.notification.service;
-
-// import com.demo.notification.entity.Store;
-// import com.demo.notification.repository.StoreRepository;
-// import org.springframework.stereotype.Service;
-
-// import java.util.List;
-
-// @Service
-// public class StoreService {
-
-//     private final StoreRepository storeRepository;
-
-//     public StoreService(
-//             StoreRepository storeRepository
-//     ) {
-//         this.storeRepository = storeRepository;
-//     }
-
-//     public List<Store> getAllStores() {
-//         return storeRepository.findAll();
-//     }
-
-//     public Store saveStore(
-//             Store store
-//     ) {
-//         return storeRepository.save(store);
-//     }
-
-//     public void deleteStore(
-//             Long id
-//     ) {
-//         storeRepository.deleteById(id);
-//     }
-// }
-
 package com.demo.notification.service;
 
 import com.demo.notification.entity.Store;
