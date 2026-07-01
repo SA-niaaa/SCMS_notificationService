@@ -1,6 +1,5 @@
 const API_URL = "http://localhost:8081/api";
 
-
 export const getSuppliers = async () => {
 
   const response = await fetch(
@@ -99,6 +98,7 @@ export const deleteSupplier = async (
   return response.text();
 
 };
+
 
 
 // STORE APIs
@@ -200,7 +200,9 @@ export const deleteStore = async (
   return response.text();
 
 };
+
 // EMPLOYEE APIs
+
 
 export const getEmployees =
   async () => {
@@ -309,9 +311,6 @@ export const deleteEmployee =
   };
 
 
-// MATERIAL APIs
-
-
 export const getMaterials = async () => {
   const response = await fetch(
     `${API_URL}/materials`
@@ -394,7 +393,9 @@ export const deleteMaterial = async (
   return response.text();
 };
 
+
 // MANUFACTURER APIs
+
 
 export const getManufacturers =
   async () => {
@@ -495,6 +496,108 @@ export const deleteManufacturer =
     return response.text();
 
   };
+
+// MANUFACTURER APIs
+
+// export const getManufacturers =
+//   async () => {
+
+//     const response =
+//       await fetch(
+//         `${API_URL}/manufacturers`
+//       );
+
+//     return response.json();
+
+//   };
+
+// export const addManufacturer =
+//   async (
+//     manufacturer: any
+//   ) => {
+
+//     const response =
+//       await fetch(
+//         `${API_URL}/manufacturers`,
+//         {
+//           method: "POST",
+
+//           headers: {
+//             "Content-Type":
+//               "application/json",
+//           },
+
+//           body: JSON.stringify(
+//             manufacturer
+//           ),
+//         }
+//       );
+
+//     if (!response.ok) {
+//       throw new Error(
+//         await response.text()
+//       );
+//     }
+
+//     return response.json();
+
+//   };
+
+// export const updateManufacturer =
+//   async (
+//     id: number,
+//     manufacturer: any
+//   ) => {
+
+//     const response =
+//       await fetch(
+//         `${API_URL}/manufacturers/${id}`,
+//         {
+//           method: "PUT",
+
+//           headers: {
+//             "Content-Type":
+//               "application/json",
+//           },
+
+//           body: JSON.stringify(
+//             manufacturer
+//           ),
+//         }
+//       );
+
+//     if (!response.ok) {
+//       throw new Error(
+//         await response.text()
+//       );
+//     }
+
+//     return response.json();
+
+//   };
+
+// export const deleteManufacturer =
+//   async (
+//     id: number
+//   ) => {
+
+//     const response =
+//       await fetch(
+//         `${API_URL}/manufacturers/${id}`,
+//         {
+//           method: "DELETE",
+//         }
+//       );
+
+//     if (!response.ok) {
+//       throw new Error(
+//         await response.text()
+//       );
+//     }
+
+//     return response.text();
+
+//   };
   
 
 

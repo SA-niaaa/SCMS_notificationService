@@ -60,23 +60,59 @@ function Material() {
 
     };
 
-  const handleAddMaterial =
-    async (
-      material: MaterialType
-    ) => {
+//   const handleAddMaterial =
+//     async (
+//       material: MaterialType
+//     ) => {
 
-      await addMaterial(
-        material
+//       await addMaterial(
+//         material
+//       );
+
+//       await fetchMaterials();
+
+      
+//       addActivity(
+//   `Material Added: ${material.materialName}`
+// );
+
+//     };
+
+
+    const handleAddMaterial =
+  async (
+    material: MaterialType
+  ) => {
+
+    try {
+
+      const saved =
+        await addMaterial(
+          material
+        );
+
+      console.log(
+        "Material Saved:",
+        saved
       );
 
       await fetchMaterials();
 
-      
       addActivity(
-  `Material Added: ${material.materialName}`
-);
+        `Material Added: ${material.materialName}`
+      );
 
-    };
+    } catch (error) {
+
+      console.error(
+        "Material Add Failed:",
+        error
+      );
+
+    }
+
+  };
+
 
   
   const handleDeleteMaterial =

@@ -28,26 +28,49 @@ function Dashboard() {
     useState(0);
 
   useEffect(() => {
-    setSupplierCount(
-      getSupplierCount()
+
+  const loadCounts =
+    async () => {
+
+      setSupplierCount(
+        await getSupplierCount()
+      );
+
+      setMaterialCount(
+        await getMaterialCount()
+      );
+
+      setManufacturerCount(
+        await getManufacturerCount()
+      );
+
+      setEmployeeCount(
+        await getEmployeeCount()
+      );
+
+      setStoreCount(
+        await getStoreCount()
+      );
+
+    };
+
+  loadCounts();
+
+  window.addEventListener(
+    "activityUpdated",
+    loadCounts
+  );
+
+  return () => {
+
+    window.removeEventListener(
+      "activityUpdated",
+      loadCounts
     );
 
-    setMaterialCount(
-      getMaterialCount()
-    );
+  };
 
-    setManufacturerCount(
-      getManufacturerCount()
-    );
-
-    setEmployeeCount(
-      getEmployeeCount()
-    );
-
-    setStoreCount(
-      getStoreCount()
-    );
-  }, []);
+}, []);
 
   return (
     <MainLayout>
